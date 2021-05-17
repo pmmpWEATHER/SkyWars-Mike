@@ -113,16 +113,18 @@ class PluginUtils {
     }
 
     public static function addStrike(array $players, Player $deathPlayer) {
-		$packet = new AddActorPacket();
-		$packet->type = 93;
-		$packet->entityRuntimeId = Entity::$entityCount++;
-		$packet->metadata = [];
-		$packet->position = $deathPlayer->asVector3()->add(0, $height = 0);
-		$packet->yaw = $deathPlayer->getYaw();
-		$packet->pitch = $deathPlayer->getPitch();
+        $packet = new AddActorPacket();
+        $packet->type = AddActorPacket::LEGACY_ID_MAP_BC[93];
+        $packet->entityRuntimeId = Entity::$entityCount++;
+        $packet->metadata = [];
+        $packet->position = $deathPlayer->asVector3()->add(0, $height = 0);
+        $packet->yaw = $deathPlayer->getYaw();
+        $packet->pitch = $deathPlayer->getPitch();
         foreach ($players as $player) {
+
             $player->dataPacket($packet);
             self::playSound($player, 'ambient.weather.lightning.impact', 1, 1);
+
         }
     }
 
